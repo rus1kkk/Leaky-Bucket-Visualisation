@@ -34,28 +34,28 @@ func main() {
 	http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request) {
 		handleCORS(w, r)
 		if r.Method == http.MethodGet {
-			handleMetrics(w, r)
+			metricsHandler(w, r)
 		}
 	})
 
 	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
 		handleCORS(w, r)
 		if r.Method == http.MethodGet {
-			handleRequest(w, r)
+			apiHandler(w, r)
 		}
 	})
 
 	http.HandleFunc("/config", func(w http.ResponseWriter, r *http.Request) {
 		handleCORS(w, r)
 		if r.Method == http.MethodPost {
-			handleConfig(w, r)
+			configHandler(w, r)
 		}
 	})
 
 	http.HandleFunc("/reset", func(w http.ResponseWriter, r *http.Request) {
 		handleCORS(w, r)
 		if r.Method == http.MethodPost {
-			handleReset(w, r)
+			resetHandler(w, r)
 		}
 	})
 
