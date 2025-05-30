@@ -58,12 +58,6 @@ func main() {
 		}
 	})
 
-	// Serve static files in production
-	if os.Getenv("ENV") == "production" {
-		fs := http.FileServer(http.Dir("../react-frontend/build"))
-		http.Handle("/", fs)
-	}
-
 	log.Printf("Server starting on port %s", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

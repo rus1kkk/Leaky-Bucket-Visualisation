@@ -8,7 +8,6 @@ RUN go build -o main .
 FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /app/main .
-COPY --from=builder /app/react-frontend/build ./react-frontend/build
 
 ENV ENV=production
 ENV PORT=8080
