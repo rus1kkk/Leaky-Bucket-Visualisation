@@ -7,7 +7,8 @@ import {
 } from 'recharts';
 import './App.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/metrics';
+// Use the base API URL from environment variable
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 function App() {
   const [metrics, setMetrics] = useState({
@@ -31,7 +32,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(API_URL);
+        // Append /metrics to the base URL
+        const response = await axios.get(`${API_BASE_URL}/metrics`);
+        
         const newMetrics = response.data;
         
         setMetrics(newMetrics);
@@ -52,14 +55,15 @@ function App() {
 
     const interval = setInterval(fetchData, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [API_BASE_URL]); // Add API_BASE_URL to dependency array
 
   const sendRequests = async () => {
     setIsSending(true);
     
     for (let i = 0; i < requestCount; i++) {
       try {
-        await fetch('http://localhost:8080/api');
+        // Append /api to the base URL
+        await fetch(`${API_BASE_URL}/api`);
       } catch (error) {
         console.error('Error sending request:', error);
       }
@@ -75,7 +79,8 @@ function App() {
       formData.append('capacity', config.capacity);
       formData.append('rate', config.rate);
 
-      const response = await fetch('http://localhost:8080/config', {
+      // Append /config to the base URL
+      const response = await fetch(`${API_BASE_URL}/config`, {
         method: 'POST',
         body: formData
       });
@@ -96,7 +101,8 @@ function App() {
   const resetStats = async () => {
     setIsResetting(true);
     try {
-      const response = await fetch('http://localhost:8080/reset', {
+      // Append /reset to the base URL
+      const response = await fetch(`${API_BASE_URL}/reset`, {
         method: 'POST'
       });
 
